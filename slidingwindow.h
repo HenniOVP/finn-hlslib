@@ -172,7 +172,6 @@ template<unsigned int ConvKernelDim,
 		 unsigned int OFMDim,
 		 unsigned int SIMD,
 		 unsigned int Stride,
-		 unsigned int NumColPruned,
 		 typename R>
 void ConvolutionInputGeneratorPruned(
 		stream<ap_uint<SIMD*Input_precision> > & in,
