@@ -79,18 +79,20 @@ stream<ap_uint<IFM_Channels*INPUT_PRECISION> > output_stream("output_stream");
 	for (unsigned int n_image = 0; n_image < MAX_IMAGES; n_image++) {
 		for (unsigned int oy = 0; oy < OFMDim; oy++) {
 			for (unsigned int ox = 0; ox < OFMDim; ox+=MMV) {
-				// if a column was pruned we need to skip parts of the matrix
-				int pruning_index = ox + oy*OFMDim;
-				bool was_pruned = PARAM::ColsToPrune[pruning_index];
-				if(was_pruned){
-					continue;
-				}
 				for (unsigned int ky = 0; ky < KERNEL_DIM; ky++) {
 					for (unsigned int kx = 0; kx < KERNEL_DIM; kx++) {
 						unsigned int input_base = (oy*STRIDE) * IFMDim + (ox*STRIDE);
 						unsigned int input_ind = input_base + ky * IFMDim + kx;
 						ap_uint<IFM_Channels*INPUT_PRECISION> outElem = output_stream.read();
 						for(unsigned int channel = 0; channel < IFM_Channels; channel++){
+							// if a column was pruned we need to skip parts of the matrix
+							int pruning_index = channel/SIMD + kx*IFM_Channels/SIMD + ky*IFM_Channels/SIMD*KERNEL_DIM;
+							bool was_pruned = PARAM::ColsToPrune[pruning_index];
+							if(was_pruned){
+								// ToDo: might need to handle more, than just continuing?
+
+								continue;
+							}
 							ap_uint<INPUT_PRECISION> out_chan = 0;
 							out_chan = outElem(INPUT_PRECISION-1,0);
 							if (((INPUT_IMAGES[n_image][input_ind][channel])) != out_chan){

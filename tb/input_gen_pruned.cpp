@@ -80,7 +80,7 @@ ConvolutionInputGeneratorPruned<KERNEL_DIM,
 	>(in_simd, out_simd, numReps, PARAM::ColsToPrune, ap_resource_dflt());
 
 //StreamingDataWidthConverter_Batch<SIMD*INPUT_PRECISION, IFM_Channels*INPUT_PRECISION, KERNEL_DIM*KERNEL_DIM*OFMDim*OFMDim*IFM_Channels/SIMD>(out_simd, out, numReps);
-StreamingDataWidthConverter_Batch<SIMD*INPUT_PRECISION, IFM_Channels*INPUT_PRECISION, KERNEL_DIM*KERNEL_DIM* (OFMDim*OFMDim-NumColPruned) *IFM_Channels/SIMD>(out_simd, out, numReps);
+StreamingDataWidthConverter_Batch<SIMD*INPUT_PRECISION, IFM_Channels*INPUT_PRECISION, OFMDim*OFMDim* (KERNEL_DIM*KERNEL_DIM*IFM_Channels/SIMD - NumColPruned) >(out_simd, out, numReps);
 
 }
 
