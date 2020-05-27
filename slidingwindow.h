@@ -226,13 +226,14 @@ void ConvolutionInputGeneratorPruned(
           unsigned int current_line_in_block = ((k_y%Stride) * IFMDim + ofm_x*Stride + k_x)*multiplying_factor + count_simd;
           ap_uint<SIMD*Input_precision> outElem = inputBuf[current_block_read][current_line_in_block];
           // skip writing if this is a column we want to prune
-          // In theory dosn't need to be recalculated so often, but this is fine
-          int pruning_index = ofm_x + ofm_y*OFMDim;
+          // if a column was pruned we need to skip parts of the matrix
+		  int pruning_index = count_simd + k_x*IFMChannels/SIMD + k_y*IFMChannels/SIMD*ConvKernelDim;
+          //int pruning_index = ofm_x + ofm_y*OFMDim;  // Old pruning index, was pruning rows instead of cols
           bool needs_pruning = ColsToPrune[pruning_index];
-
           if(!needs_pruning){
         	  out.write(outElem);
           }
+
           count_simd++;
           if (count_simd == multiplying_factor) {
             count_simd=0;

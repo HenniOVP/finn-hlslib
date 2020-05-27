@@ -40,23 +40,22 @@
 #define INPUT_MULTIPLIER 1
 
 // new parameters
-#define NumColPruned 3
+#define NumColPruned 0
 
 
 namespace PARAM{
 	// For default parameters the matrix is 8 x 9 in size
 	// 		Where the 8 comes from: KERNEL_DIM * KERNEL_DIM * IFM_Channels
 	// 		And 9 comes from: OFMDim * OFMDim
-	// So we need 9 booleans for the default parameters
-	static bool ColsToPrune[9]={
+	// So we need 8 booleans for the default parameters
+	static bool ColsToPrune[8]={
 			false,
 			false,
-			true,
 			false,
 			false,
-			true,
 			false,
-			true,
+			false,
+			false,
 			false,
 	};
 }
