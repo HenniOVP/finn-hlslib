@@ -48,7 +48,7 @@ namespace PARAM{
 	// 		Where the 8 comes from: KERNEL_DIM * KERNEL_DIM * IFM_Channels / SIMD
 	// 		And 9 comes from: OFMDim * OFMDim
 	// So we need 8 booleans for the default parameters
-	static bool ColsToPrune[8]={
+	static const bool ColsToPrune[8]={
 			false,
 			true,
 			false,

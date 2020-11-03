@@ -41,15 +41,13 @@
 #define INPUT_MULTIPLIER 1
 
 // new parameters
-#define NumColPruned 3
-
 
 namespace PARAM{
 	// For default parameters the matrix is 8 x 9 in size
 	// 		Where the 8 comes from: KERNEL_DIM * KERNEL_DIM * IFM_Channels / SIMD
 	// 		And 9 comes from: OFMDim * OFMDim
 	// So we need 8 booleans for the default parameters
-	static bool ColsToPrune[8]={
+	static const bool ColsToPrune[8]={
 			false,
 			true,
 			false,
@@ -77,7 +75,7 @@ namespace PARAM{
     };*/
 	// New default parameters, true and false can be set somewhat randomly,
 	// but there needs to be one true and one false per line
-	static bool SIMD_pruning_mask[4][2] = {
+	static const bool SIMD_pruning_mask[4][2] = {
 	            {true, false},
 	            {false, true},
 	            {true, false},
